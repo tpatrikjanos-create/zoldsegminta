@@ -1,0 +1,96 @@
+/* Design tokens extracted from kifli.hu (Phase 1 recon), light theme (avocado-light).
+   Source: /_next/static/css/065642c2b0458ad1.css — see docs/research/phase1-recon.md */
+
+:root{
+  /* Brand green scale (light -> dark) */
+  --kf-green-10:#f1faf2;
+  --kf-green-20:#ddf4de;
+  --kf-green-30:#c6ebc8;
+  --kf-green-40:#aee3b1;
+  --kf-green-50:#8fcd95;
+  --kf-green-60:#9dcb9a;
+  --kf-green-70:#b9e1b6;
+  --kf-green-80:#cdeaca;
+  --kf-green-90:#e1f4df;
+  --kf-green-100:#f3faf3;
+
+  /* Secondary blue scale */
+  --kf-blue-10:#f3f7f9;
+  --kf-blue-20:#d3e3eb;
+  --kf-blue-30:#a8c7d7;
+  --kf-blue-40:#7cacc3;
+  --kf-blue-50:#5190af;
+  --kf-blue-60:#5190af;
+  --kf-blue-70:#7cacc3;
+  --kf-blue-80:#a8c7d7;
+  --kf-blue-90:#d3e3eb;
+  --kf-blue-100:#f3f7f9;
+
+  /* Neutrals / brand accents */
+  --kf-color-header:#252525;
+  --kf-color-header-dark:#1a1a1a;
+  --kf-color-discount-yellow:#ffe55a;
+  --kf-color-like:#ff455b;
+  --kf-background-white:#fff;
+  --kf-background-image-overlay:#f6f6f6;
+
+  /* Alpha ramps (black-based) */
+  --kf-alpha-5:#0000000d;
+  --kf-alpha-10:#0000001a;
+  --kf-alpha-20:#00000033;
+  --kf-alpha-30:#0000004d;
+  --kf-alpha-40:#00000066;
+  --kf-alpha-50:#00000080;
+  --kf-alpha-60:#00000099;
+  --kf-alpha-70:#000000b3;
+  --kf-alpha-80:#000000cc;
+  --kf-alpha-90:#000000e6;
+
+  /* Typography */
+  --kf-font-family:"Inter",-apple-system,BlinkMacSystemFont,"San Francisco","Segoe UI","Helvetica Neue","Liberation Sans",Roboto,sans-serif;
+  --kf-font-size-60:10px;
+  --kf-font-size-70:11px;
+  --kf-font-size-80:12px;
+  --kf-font-size-90:13px;
+  --kf-font-size-100:14px;
+  --kf-font-size-200:16px;
+  --kf-font-size-300:18px;
+  --kf-font-size-400:20px;
+  --kf-font-size-500:22px;
+  --kf-font-size-600:24px;
+  --kf-font-size-700:36px;
+  --kf-font-size-800:48px;
+
+  /* Spacing scale (px) */
+  --kf-size-10:1px;
+  --kf-size-25:2px;
+  --kf-size-50:4px;
+  --kf-size-100:8px;
+  --kf-size-150:12px;
+  --kf-size-200:16px;
+  --kf-size-250:20px;
+  --kf-size-300:24px;
+  --kf-size-350:28px;
+  --kf-size-400:32px;
+  --kf-size-500:40px;
+  --kf-size-550:44px;
+  --kf-size-600:48px;
+  --kf-size-700:56px;
+  --kf-size-750:60px;
+  --kf-size-800:64px;
+  --kf-size-900:72px;
+  --kf-size-1000:80px;
+  --kf-size-1500:120px;
+  --kf-size-2500:320px;
+
+  /* Breakpoints (reference only — use in media queries as literal px) */
+  --kf-breakpoint-2xs:361px;
+  --kf-breakpoint-xs:567px;
+  --kf-breakpoint-sm:768px;
+  --kf-breakpoint-md:960px;
+  --kf-breakpoint-ml:1024px;
+  --kf-breakpoint-lg:1260px;
+  --kf-breakpoint-xl:1680px;
+  --kf-breakpoint-2xl:1761px;
+  --kf-breakpoint-3xl:1921px;
+}

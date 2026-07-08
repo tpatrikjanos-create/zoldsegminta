@@ -97,3 +97,15 @@ Alpha scales: `--alpha-{5,10,20,30,40,50,60,70,80,90,100}` (black-based) and
       in static HTML/CSS so far
 - [ ] Border-radius scale actual px values (currently only see `var()`
       references, not resolved)
+- [x] Favicon downloaded (`assets/favicon/favicon.ico`, `favicon-32x32.png`)
+
+## Phase 2 — Foundation Build (done, screenshot-less)
+
+- `assets/tokens.css` — color/typography/spacing/breakpoint tokens above,
+  wired into `index.html` via `<link rel="stylesheet">`.
+- `assets/icons/` — hero + app-badge SVGs pulled from `cdn.kifli.hu`
+  (`hero-award.svg`, `hero-fresh.svg`, `hero-products.svg`, `star.svg`).
+- `assets/favicon/` — `favicon.ico`, `favicon-32x32.png`.
+- Not done (needs a working browser): SVG icon *inventory* per component,
+  TypeScript interfaces (n/a — this repo is static HTML, no build step),
+  `npm run build` verification (n/a for the same reason).
