@@ -1,448 +1,228 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="hu">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>Kerepesi Zöldség Kft. — Minta felület (Étterem nézet)</title>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kerepesi Zöldség | Online szupermarket - Minőségi online bevásárlás</title>
+<script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
-
-<style>
-  :root{
-    --kraft:#EDE6D6;
-    --kraft-dark:#E1D6BA;
-    --forest:#20402C;
-    --forest-dark:#132A1B;
-    --carrot:#DD7E0F;
-    --carrot-dark:#B8660A;
-    --tomato:#AE3A2C;
-    --charcoal:#2A241D;
-    --line:#CBBD97;
-    --white:#FFFDF7;
-    --font-display:'Oswald', sans-serif;
-    --font-body:'Work Sans', sans-serif;
-    --font-mono:'IBM Plex Mono', monospace;
-    --radius:6px;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:var(--kraft);
-    color:var(--charcoal);
-    font-family:var(--font-body);
-    min-height:100vh;
-    background-image:radial-gradient(circle at 1px 1px, rgba(0,0,0,0.035) 1px, transparent 0);
-    background-size:16px 16px;
-  }
-  button{font-family:inherit;cursor:pointer;}
-  input,select{font-family:inherit;}
-  ::selection{background:var(--carrot);color:var(--white);}
-  :focus-visible{outline:3px solid var(--carrot);outline-offset:2px;}
-  @media (prefers-reduced-motion: reduce){ *{animation:none !important;transition:none !important;} }
-
-  h1,h2,h3,.disp{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.02em;color:var(--forest-dark);}
-  .mono{font-family:var(--font-mono);}
-
-  .demo-banner{
-    background:var(--carrot);color:var(--white);text-align:center;
-    font-family:var(--font-display);text-transform:uppercase;letter-spacing:.05em;
-    font-size:12.5px;padding:8px 10px;
-    position:sticky;top:0;z-index:50;
-  }
-  .demo-banner b{text-decoration:underline;}
-
-  .topbar{
-    background:var(--forest);color:var(--kraft);padding:14px 18px;
-    display:flex;align-items:center;justify-content:space-between;gap:12px;
-    border-bottom:4px solid var(--forest-dark);position:sticky;top:32px;z-index:40;
-  }
-  .brand{display:flex;align-items:center;gap:12px;}
-  .brand-badge{
-    width:44px;height:44px;border-radius:50%;border:2px solid var(--kraft);
-    display:flex;align-items:center;justify-content:center;
-    font-family:var(--font-display);font-weight:700;font-size:15px;
-    transform:rotate(-6deg);flex-shrink:0;
-  }
-  .brand-text .t1{font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--kraft);line-height:1.1;}
-  .brand-text .t2{font-size:11px;color:var(--kraft-dark);letter-spacing:.08em;text-transform:uppercase;}
-  .topbar-right{display:flex;align-items:center;gap:10px;}
-  .who{font-size:13px;color:var(--kraft-dark);text-align:right;line-height:1.3;}
-  .who b{color:var(--kraft);display:block;font-size:14px;}
-
-  .btn{border:none;border-radius:var(--radius);padding:10px 16px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:6px;transition:transform .08s ease;}
-  .btn:active{transform:translateY(1px);}
-  .btn-carrot{background:var(--carrot);color:var(--white);}
-  .btn-carrot:hover{background:var(--carrot-dark);}
-  .btn-outline{background:transparent;border:2px solid currentColor;color:var(--kraft);}
-  .btn-outline:hover{background:rgba(255,255,255,.08);}
-  .btn:disabled{opacity:.45;cursor:not-allowed;}
-
-  main{width:100%;max-width:1180px;margin:0 auto;padding:18px 16px 100px;}
-
-  .stamp{display:inline-flex;align-items:center;justify-content:center;border:2px solid currentColor;border-radius:50%;font-family:var(--font-display);font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:4px 9px;font-size:10.5px;transform:rotate(-4deg);white-space:nowrap;}
-  .stamp-cat{color:var(--forest);border-color:var(--forest);border-radius:14px;background:rgba(32,64,44,.05);}
-  .stamp-tier-bronz{color:#8A5A2B;border-color:#8A5A2B;background:rgba(138,90,43,.08);}
-  .stamp-tier-ezust{color:#5B6470;border-color:#5B6470;background:rgba(91,100,112,.08);}
-  .stamp-tier-arany{color:#9C7A12;border-color:#9C7A12;background:rgba(156,122,18,.1);}
-
-  .sold-out-stamp{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-11deg);border:3px solid var(--tomato);color:var(--tomato);font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:5px 14px;border-radius:4px;background:rgba(255,253,247,.85);font-size:14px;pointer-events:none;}
-
-  .tier-banner{display:flex;align-items:center;gap:12px;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;margin-bottom:6px;flex-wrap:wrap;}
-  .tier-banner .tb-text{font-size:13px;color:#5c5344;}
-  .tier-banner .tb-text b{color:var(--forest-dark);}
-
-  .progress-wrap{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;margin-bottom:14px;}
-  .progress-track{position:relative;height:10px;background:var(--kraft-dark);border-radius:6px;margin:10px 0 6px;overflow:hidden;}
-  .progress-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--carrot),var(--carrot-dark));border-radius:6px;transition:width .4s ease;}
-  .progress-labels{display:flex;justify-content:space-between;font-size:11px;color:#7a705c;font-family:var(--font-mono);}
-
-  .chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 14px;}
-  .chip{flex-shrink:0;border:1.5px solid var(--forest);color:var(--forest);background:var(--white);border-radius:20px;padding:7px 16px;font-size:13px;font-weight:600;}
-  .chip.active{background:var(--forest);color:var(--kraft);}
-
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;}
-  .card{position:relative;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:14px 14px 12px;display:flex;flex-direction:column;gap:8px;box-shadow:0 2px 0 rgba(0,0,0,.02);}
-  .card.out{opacity:.55;}
-  .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:6px;}
-  .card h3{font-size:16px;margin:0;line-height:1.15;color:var(--charcoal);text-transform:none;letter-spacing:0;font-weight:600;font-family:var(--font-body);}
-  .price-row{display:flex;align-items:baseline;gap:8px;margin-top:2px;}
-  .price{font-family:var(--font-mono);font-weight:600;font-size:17px;color:var(--forest-dark);}
-  .price-orig{font-family:var(--font-mono);font-size:12.5px;color:#9a8f79;text-decoration:line-through;}
-  .unit{font-size:12px;color:#7a705c;}
-  .qty-row{display:flex;align-items:center;gap:8px;margin-top:auto;}
-  .qty-btn{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--forest);background:var(--white);color:var(--forest);font-size:16px;line-height:1;font-weight:700;}
-  .qty-input{width:52px;text-align:center;padding:6px 4px;border:1.5px solid var(--line);border-radius:5px;font-family:var(--font-mono);}
-
-  .cart-fab{position:fixed;bottom:18px;right:18px;z-index:60;background:var(--carrot);color:var(--white);border:none;border-radius:30px;padding:14px 20px;font-weight:700;font-size:15px;box-shadow:0 8px 20px rgba(0,0,0,.25);display:flex;align-items:center;gap:8px;}
-  .cart-panel{position:fixed;inset:auto 0 0 0;background:var(--white);border-top:3px solid var(--forest);border-radius:16px 16px 0 0;max-height:82vh;overflow-y:auto;z-index:70;transform:translateY(105%);transition:transform .25s ease;padding:18px 18px 24px;box-shadow:0 -10px 30px rgba(0,0,0,.25);}
-  .cart-panel.open{transform:translateY(0);}
-  .cart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
-  .cart-head h2{font-size:18px;margin:0;}
-  .close-cart{background:none;border:none;font-size:22px;color:var(--charcoal);}
-  .cart-item{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);gap:8px;}
-  .cart-item .ci-name{font-weight:600;font-size:14px;}
-  .cart-item .ci-sub{font-size:12px;color:#7a705c;}
-  .cart-item .ci-remove{background:none;border:none;color:var(--tomato);font-size:13px;font-weight:600;}
-  .cart-totals{margin-top:14px;font-size:14px;}
-  .cart-totals .row{display:flex;justify-content:space-between;padding:4px 0;}
-  .cart-totals .row.grand{font-weight:700;font-size:17px;border-top:2px solid var(--forest);margin-top:6px;padding-top:8px;font-family:var(--font-mono);}
-  .coupon-row{display:flex;gap:8px;margin:12px 0;}
-  .coupon-row input{flex:1;padding:9px 10px;border:1.5px solid var(--line);border-radius:5px;text-transform:uppercase;font-family:var(--font-mono);}
-  .empty-note{color:#7a705c;font-size:14px;padding:20px 0;text-align:center;}
-  .coupon-hint{font-size:11.5px;color:#7a705c;margin:-6px 0 8px;}
-
-  @media (min-width:900px){
-    .cart-fab{display:none;}
-    main{display:grid;grid-template-columns:1fr 320px;gap:22px;align-items:start;}
-    main .content-col{grid-column:1;}
-    .cart-panel{position:sticky;top:110px;grid-column:2;transform:none;max-height:calc(100vh - 130px);border-radius:12px;border:1px solid var(--line);box-shadow:0 4px 16px rgba(0,0,0,.06);}
-    .close-cart{display:none;}
-  }
-
-  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--forest-dark);color:var(--kraft);padding:12px 20px;border-radius:8px;font-size:14px;z-index:100;opacity:0;pointer-events:none;transition:all .25s ease;box-shadow:0 6px 20px rgba(0,0,0,.3);max-width:90vw;text-align:center;}
-  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-
-  .confirm-overlay{position:fixed;inset:0;background:rgba(19,42,27,.55);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s ease;}
-  .confirm-overlay.show{opacity:1;pointer-events:auto;}
-  .confirm-card{background:var(--white);border-radius:12px;max-width:380px;width:100%;padding:28px 24px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.3);}
-  .confirm-card .check{font-size:40px;margin-bottom:8px;}
-  .confirm-card h2{font-size:19px;margin:0 0 8px;}
-  .confirm-card p{font-size:14px;color:#5c5344;margin:0 0 18px;}
-</style>
-</head>
-<body>
-
-<div class="demo-banner">🎬 Ez egy <b>minta / demo</b> felület bemutatásra — valós rendelés és fiók nem jön létre</div>
-
-<div class="topbar">
-  <div class="brand">
-    <div class="brand-badge">KZ</div>
-    <div class="brand-text">
-      <div class="t1">Kerepesi Zöldség</div>
-      <div class="t2">Kft.</div>
-    </div>
-  </div>
-  <div class="topbar-right">
-    <div class="who"><b>Minta Étterem Kft.</b>minta@etterem.hu</div>
-  </div>
-</div>
-
-<main>
-  <div class="content-col">
-    <div class="tier-banner" id="tierBanner"></div>
-    <div class="progress-wrap" id="progressWrap"></div>
-    <div class="chips" id="chips"></div>
-    <div class="grid" id="grid"></div>
-  </div>
-  <div class="cart-panel" id="cartPanel"></div>
-</main>
-
-<button class="cart-fab" id="cartFab" onclick="toggleCart(true)">🧺 Kosár <span id="fabCount"></span></button>
-
-<div class="toast" id="toast"></div>
-
-<div class="confirm-overlay" id="confirmOverlay">
-  <div class="confirm-card">
-    <div class="check">✅</div>
-    <h2>Rendelés leadva!</h2>
-    <p id="confirmText">Köszönjük a rendelést. Ez egy demó, így most nem történt valódi rendelés.</p>
-    <button class="btn btn-carrot" style="width:100%;justify-content:center;" onclick="closeConfirm()">Rendben</button>
-  </div>
-</div>
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script>
-/* ============================================================
-   MINTA ADATOK — ez egy bemutató (nincs Firebase, nincs backend)
-   ============================================================ */
-const products = {
-  p1:  {nev:'Paradicsom', egyseg:'kg', ar:890,  kategoria:'zöldség', kedvezmeny:0,  keszleten:true},
-  p2:  {nev:'Uborka',     egyseg:'kg', ar:650,  kategoria:'zöldség', kedvezmeny:0,  keszleten:true},
-  p3:  {nev:'Vöröshagyma',egyseg:'kg', ar:390,  kategoria:'zöldség', kedvezmeny:0,  keszleten:true},
-  p4:  {nev:'Fokhagyma',  egyseg:'kg', ar:2400, kategoria:'zöldség', kedvezmeny:10, keszleten:true},
-  p5:  {nev:'Sárgarépa',  egyseg:'kg', ar:340,  kategoria:'zöldség', kedvezmeny:0,  keszleten:true},
-  p6:  {nev:'Kápia paprika', egyseg:'kg', ar:1290, kategoria:'zöldség', kedvezmeny:0, keszleten:false},
-  p7:  {nev:'Burgonya',   egyseg:'láda', ar:4200,kategoria:'zöldség', kedvezmeny:0,  keszleten:true},
-  p8:  {nev:'Jégsaláta',  egyseg:'db', ar:420,  kategoria:'zöldség', kedvezmeny:0,  keszleten:true},
-  p9:  {nev:'Cukkini',    egyseg:'kg', ar:590,  kategoria:'zöldség', kedvezmeny:0,  keszleten:true},
-  p10: {nev:'Citrom',     egyseg:'kg', ar:990,  kategoria:'gyümölcs', kedvezmeny:0, keszleten:true},
-  p11: {nev:'Alma',       egyseg:'kg', ar:520,  kategoria:'gyümölcs', kedvezmeny:0, keszleten:true},
-  p12: {nev:'Görögdinnye',egyseg:'db', ar:2200, kategoria:'gyümölcs', kedvezmeny:15,keszleten:true},
-  p13: {nev:'Petrezselyemzöld', egyseg:'köteg', ar:290, kategoria:'fűszernövény', kedvezmeny:0, keszleten:true},
-  p14: {nev:'Bazsalikom', egyseg:'köteg', ar:390, kategoria:'fűszernövény', kedvezmeny:0, keszleten:true},
-  p15: {nev:'Kapor',      egyseg:'köteg', ar:290, kategoria:'fűszernövény', kedvezmeny:0, keszleten:false},
-};
-
-const tiers = [
-  {nev:'Bronz',  kuszobFt:300000,  kedvezmenySzazalek:5},
-  {nev:'Ezüst',  kuszobFt:800000,  kedvezmenySzazalek:10},
-  {nev:'Arany',  kuszobFt:1500000, kedvezmenySzazalek:15},
-];
-
-const restaurant = {
-  nev:'Minta Étterem Kft.',
-  kedvezmeny:0,          // egyedi admin kedvezmény (most nincs beállítva)
-  osszesRendelt:650000,  // eddig összesen rendelt érték
-};
-
-const coupons = {
-  'NYARI10': {tipus:'szazalek', ertek:10, hatokor:'mindenki', termekId:null, ervenyesEddig:null, aktiv:true},
-  'FOKHAGYMA20': {tipus:'szazalek', ertek:20, hatokor:'mindenki', termekId:'p4', ervenyesEddig:null, aktiv:true},
-};
-
-/* ============================================================
-   ÁLLAPOT
-   ============================================================ */
-let cart = [];
-let activeCategory = 'Mind';
-
-function fmtFt(n){ return Math.round(n||0).toLocaleString('hu-HU') + ' Ft'; }
-function round(n){ return Math.round((n||0)*100)/100; }
-function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function toast(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toast._h);
-  toast._h = setTimeout(()=>t.classList.remove('show'), 2600);
-}
-
-function sortedTiers(){ return [...tiers].sort((a,b)=>a.kuszobFt-b.kuszobFt); }
-function tierClass(nev){
-  const n=(nev||'').toLowerCase();
-  if(n.includes('arany')) return 'stamp-tier-arany';
-  if(n.includes('ezüst')||n.includes('ezust')) return 'stamp-tier-ezust';
-  return 'stamp-tier-bronz';
-}
-function getCurrentTier(osszesRendelt){
-  let current = null;
-  for(const t of sortedTiers()){ if(osszesRendelt >= t.kuszobFt) current = t; }
-  return current;
-}
-function nextTier(osszesRendelt){
-  for(const t of sortedTiers()){ if(osszesRendelt < t.kuszobFt) return t; }
-  return null;
-}
-function effectiveDiscountPct(){
-  const tier = getCurrentTier(restaurant.osszesRendelt);
-  return Math.max(restaurant.kedvezmeny||0, tier ? tier.kedvezmenySzazalek : 0);
-}
-function productUnitPrice(p){ return round(p.ar * (1-(p.kedvezmeny||0)/100)); }
-
-/* ============================================================
-   RENDER
-   ============================================================ */
-function render(){
-  renderTierBanner();
-  renderProgress();
-  renderChips();
-  renderGrid();
-  renderCart();
-  document.getElementById('fabCount').textContent = cart.length ? '· '+cart.reduce((s,c)=>s+c.mennyiseg,0)+' tétel' : '';
-}
-
-function renderTierBanner(){
-  const tier = getCurrentTier(restaurant.osszesRendelt);
-  const discPct = effectiveDiscountPct();
-  document.getElementById('tierBanner').innerHTML = `
-    ${tier ? `<span class="stamp ${tierClass(tier.nev)}">${esc(tier.nev)} szint · ${tier.kedvezmenySzazalek}%</span>` : ''}
-    <span class="tb-text">${discPct>0 ? `Jelenlegi kedvezményed <b>${discPct}%</b> minden rendelésen.` : 'Még nincs aktív kedvezményed — rendelj, hogy törzsvásárlói szintet érj el!'}</span>
-  `;
-}
-
-function renderProgress(){
-  const next = nextTier(restaurant.osszesRendelt);
-  const wrap = document.getElementById('progressWrap');
-  if(!next){
-    wrap.innerHTML = `<div class="tb-text" style="font-size:13px;">🏆 Elérted a legmagasabb törzsvásárlói szintet!</div>`;
-    return;
-  }
-  const prevThreshold = [...sortedTiers()].reverse().find(t=>t.kuszobFt<=restaurant.osszesRendelt);
-  const base = prevThreshold ? prevThreshold.kuszobFt : 0;
-  const pct = Math.min(100, Math.round(((restaurant.osszesRendelt-base)/(next.kuszobFt-base))*100));
-  wrap.innerHTML = `
-    <div class="tb-text">Eddig összesen rendelve: <b class="mono">${fmtFt(restaurant.osszesRendelt)}</b> — még <b>${fmtFt(next.kuszobFt-restaurant.osszesRendelt)}</b> a(z) <b>${esc(next.nev)}</b> szintig (${next.kedvezmenySzazalek}% kedvezmény)</div>
-    <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
-    <div class="progress-labels"><span>${fmtFt(base)}</span><span>${fmtFt(next.kuszobFt)}</span></div>
-  `;
-}
-
-function renderChips(){
-  const categories = ['Mind', ...new Set(Object.values(products).map(p=>p.kategoria))];
-  document.getElementById('chips').innerHTML = categories.map(c=>
-    `<button class="chip ${c===activeCategory?'active':''}" onclick="setCategory('${esc(c)}')">${esc(c)}</button>`
-  ).join('');
-}
-
-function renderGrid(){
-  const discPct = effectiveDiscountPct();
-  const entries = Object.entries(products).filter(([id,p])=>activeCategory==='Mind'||p.kategoria===activeCategory);
-  document.getElementById('grid').innerHTML = entries.map(([id,p])=>{
-    const unitPrice = productUnitPrice(p);
-    const finalPrice = round(unitPrice*(1-discPct/100));
-    const showOrig = discPct>0 || (p.kedvezmeny||0)>0;
-    const inCart = cart.find(c=>c.termekId===id);
-    const qty = inCart ? inCart.mennyiseg : 0;
-    return `
-      <div class="card ${p.keszleten===false?'out':''}">
-        ${p.keszleten===false ? '<div class="sold-out-stamp">Elfogyott</div>' : ''}
-        <div class="card-top">
-          <h3>${esc(p.nev)}</h3>
-          <span class="stamp stamp-cat">${esc(p.kategoria)}</span>
-        </div>
-        <div class="price-row">
-          <span class="price">${fmtFt(finalPrice)}</span>
-          ${showOrig ? `<span class="price-orig">${fmtFt(p.ar)}</span>` : ''}
-          <span class="unit">/ ${esc(p.egyseg)}</span>
-        </div>
-        <div class="qty-row">
-          <button class="qty-btn" ${p.keszleten===false?'disabled':''} onclick="changeQty('${id}',-1)">−</button>
-          <input class="qty-input mono" type="number" min="0" step="1" value="${qty}" ${p.keszleten===false?'disabled':''} onchange="setQty('${id}', this.value)">
-          <button class="qty-btn" ${p.keszleten===false?'disabled':''} onclick="changeQty('${id}',1)">+</button>
-        </div>
-      </div>`;
-  }).join('');
-}
-
-function setCategory(c){ activeCategory=c; render(); }
-function changeQty(id, delta){
-  const existing = cart.find(c=>c.termekId===id);
-  if(existing){
-    existing.mennyiseg = Math.max(0, existing.mennyiseg+delta);
-    if(existing.mennyiseg===0) cart = cart.filter(c=>c.termekId!==id);
-  } else if(delta>0){
-    cart.push({termekId:id, mennyiseg:1});
-  }
-  render();
-}
-function setQty(id, val){
-  const n = Math.max(0, Math.floor(Number(val)||0));
-  cart = cart.filter(c=>c.termekId!==id);
-  if(n>0) cart.push({termekId:id, mennyiseg:n});
-  render();
-}
-function toggleCart(open){
-  const panel = document.getElementById('cartPanel');
-  if(window.innerWidth>=900) return;
-  panel.classList.toggle('open', open);
-}
-
-function computeTotals(couponCodeRaw){
-  const discPct = effectiveDiscountPct();
-  let reszosszeg = 0;
-  const tetelek = cart.map(c=>{
-    const p = products[c.termekId];
-    const egysegAr = productUnitPrice(p);
-    const tetelOsszeg = round(egysegAr*c.mennyiseg);
-    reszosszeg += tetelOsszeg;
-    return {termekId:c.termekId, nev:p.nev, egyseg:p.egyseg, egysegAr, mennyiseg:c.mennyiseg, tetelOsszeg};
-  });
-  const kedvezmenyOsszeg = round(reszosszeg*discPct/100);
-  const afterDiscount = round(reszosszeg-kedvezmenyOsszeg);
-
-  let kuponOsszeg=0, kuponKod=(couponCodeRaw||'').trim().toUpperCase(), couponError=null, coupon=null;
-  if(kuponKod){
-    coupon = coupons[kuponKod];
-    if(!coupon || coupon.aktiv===false){
-      couponError='Érvénytelen kuponkód.'; kuponKod='';
-    } else if(coupon.termekId){
-      const tetel = tetelek.find(t=>t.termekId===coupon.termekId);
-      if(tetel){ kuponOsszeg = coupon.tipus==='szazalek' ? round(tetel.tetelOsszeg*coupon.ertek/100) : Math.min(coupon.ertek,tetel.tetelOsszeg); }
-      else { couponError='Ez a kupon egy olyan termékre vonatkozik, ami nincs a kosaradban.'; kuponKod=''; }
-    } else {
-      kuponOsszeg = coupon.tipus==='szazalek' ? round(afterDiscount*coupon.ertek/100) : Math.min(coupon.ertek, afterDiscount);
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          background: '#000000',
+          foreground: '#f2f4f4',
+          card: '#1c2529',
+          primary: '#2f7d3b',
+          secondary: '#185729',
+          muted: '#9ca4a9',
+          accent: '#ddf4de',
+          coral: '#e16e64',
+          mustard: '#f8ec88',
+          yellow: '#ffe55a',
+        },
+        fontFamily: { sans: ['Inter', 'sans-serif'] },
+      }
     }
   }
-  const vegosszeg = round(afterDiscount-kuponOsszeg);
-  return {tetelek, reszosszeg, discPct, kedvezmenyOsszeg, kuponKod, kuponOsszeg, vegosszeg, couponError};
-}
-
-function renderCart(){
-  const couponVal = document.getElementById('couponInput') ? document.getElementById('couponInput').value : '';
-  const totals = computeTotals(couponVal);
-  const itemsHtml = totals.tetelek.length ? totals.tetelek.map(t=>`
-    <div class="cart-item">
-      <div>
-        <div class="ci-name">${esc(t.nev)}</div>
-        <div class="ci-sub mono">${t.mennyiseg} ${esc(t.egyseg)} × ${fmtFt(t.egysegAr)}</div>
-      </div>
-      <div style="text-align:right;">
-        <div class="mono">${fmtFt(t.tetelOsszeg)}</div>
-        <button class="ci-remove" onclick="setQty('${t.termekId}',0)">eltávolít</button>
-      </div>
-    </div>`).join('') : '<div class="empty-note">A kosarad üres.<br>Válassz termékeket a listából.</div>';
-
-  document.getElementById('cartPanel').innerHTML = `
-    <div class="cart-head"><h2>Kosár</h2><button class="close-cart" onclick="toggleCart(false)">✕</button></div>
-    ${itemsHtml}
-    <div class="coupon-row"><input id="couponInput" placeholder="KUPONKÓD" value="${esc(couponVal)}" oninput="render()"></div>
-    <div class="coupon-hint">Próbáld ki: <b class="mono">NYARI10</b> (10% mindenre) vagy <b class="mono">FOKHAGYMA20</b> (csak fokhagymára)</div>
-    ${totals.couponError ? `<div style="color:var(--tomato);font-size:13px;margin-bottom:6px;">${esc(totals.couponError)}</div>` : ''}
-    <div class="cart-totals">
-      <div class="row"><span>Részösszeg</span><span class="mono">${fmtFt(totals.reszosszeg)}</span></div>
-      ${totals.discPct>0 ? `<div class="row"><span>Kedvezmény (${totals.discPct}%)</span><span class="mono">−${fmtFt(totals.kedvezmenyOsszeg)}</span></div>` : ''}
-      ${totals.kuponOsszeg>0 ? `<div class="row"><span>Kupon (${esc(totals.kuponKod)})</span><span class="mono">−${fmtFt(totals.kuponOsszeg)}</span></div>` : ''}
-      <div class="row grand"><span>Végösszeg</span><span>${fmtFt(totals.vegosszeg)}</span></div>
-    </div>
-    <button class="btn btn-carrot" style="width:100%;justify-content:center;margin-top:14px;" ${totals.tetelek.length?'':'disabled'} onclick="submitOrder()">Rendelés leadása</button>
-  `;
-}
-
-function submitOrder(){
-  const couponVal = document.getElementById('couponInput') ? document.getElementById('couponInput').value : '';
-  const totals = computeTotals(couponVal);
-  if(!totals.tetelek.length){ toast('A kosár üres.'); return; }
-  document.getElementById('confirmText').textContent =
-    `${totals.tetelek.length} tétel, végösszeg ${fmtFt(totals.vegosszeg)}. Ez egy demó, így most nem történt valódi rendelés.`;
-  document.getElementById('confirmOverlay').classList.add('show');
-  cart = [];
-  toggleCart(false);
-  render();
-}
-function closeConfirm(){ document.getElementById('confirmOverlay').classList.remove('show'); }
-
-render();
 </script>
+<style>
+  body { background:#000; color:#f2f4f4; font-family:'Inter',sans-serif; }
+  .noscroll::-webkit-scrollbar{ display:none; }
+  .noscroll{ scrollbar-width:none; }
+</style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<div class="sticky top-0 z-50 bg-black">
+  <div class="hidden items-center justify-between gap-4 bg-card px-6 py-3 text-sm sm:flex">
+    <p class="max-w-[900px]">Minden nap friss árut hozunk a helyi termelőktől – nézd meg a mai szezonális válogatásunkat!</p>
+    <button class="shrink-0 rounded-full bg-foreground px-4 py-1.5 text-xs font-semibold text-black">Részletek</button>
+  </div>
+  <div class="noscroll flex items-center gap-4 overflow-x-auto whitespace-nowrap bg-primary px-4 py-1.5 text-xs font-medium text-white sm:flex-wrap sm:justify-center sm:gap-5 sm:overflow-visible sm:whitespace-normal">
+    <span class="font-bold">Xtra</span>
+    <span>🚚 Ingyenes kiszállítás 12 000 Ft felett</span>
+    <span>10% kedvezmény sajátmárkás és BIO termékekre</span>
+    <span>4× kis értékű rendelés (1 Ft-tól)</span>
+    <a href="#" class="underline">Próbáld ki az Xtrát!</a>
+  </div>
+  <div class="flex flex-wrap items-center gap-3 px-4 py-3 sm:gap-5 sm:px-6">
+    <a href="#" class="flex items-center gap-1 text-xl font-extrabold text-primary">Kerepesi <span class="text-xs font-normal text-muted">Zöldség</span></a>
+    <button class="hidden items-center gap-1.5 rounded-lg border border-white/10 px-3 py-1.5 text-sm md:flex">
+      <span>🚚</span>
+      <span class="flex flex-col text-left leading-tight">
+        <span class="text-muted">Kínálatunk ide: Budapest K...</span>
+        <span class="font-semibold text-accent">Pontos cím megadása</span>
+      </span>
+    </button>
+    <div class="ml-auto flex items-center gap-1 sm:hidden">
+      <button class="flex size-10 items-center justify-center text-lg" aria-label="Bejelentkezés">👤</button>
+      <button class="flex size-10 items-center justify-center text-lg" aria-label="Kosár">🛒</button>
+    </div>
+    <form class="order-last flex w-full items-stretch sm:order-none sm:w-auto sm:flex-1 sm:min-w-[200px] sm:max-w-[640px]">
+      <input type="search" placeholder="Név, kategória vagy recept keresése" class="h-10 flex-1 rounded-l-lg border border-white/10 bg-black px-4 text-sm placeholder:text-muted focus:outline-none" />
+      <button type="button" class="flex h-10 w-12 items-center justify-center rounded-r-lg bg-accent text-secondary">🔍</button>
+    </form>
+    <button class="hidden items-center gap-1 text-sm lg:flex">🇭🇺</button>
+    <button class="hidden items-center gap-1.5 rounded-full bg-card px-4 py-2 text-sm font-medium sm:flex">👤 Bejelentkezés</button>
+    <button class="hidden items-center gap-1.5 text-sm font-medium sm:flex">🛒 Kosár</button>
+  </div>
+  <nav class="noscroll flex items-center gap-4 overflow-x-auto whitespace-nowrap px-6 pb-3 text-sm font-medium sm:flex-wrap sm:gap-5 sm:overflow-visible sm:whitespace-normal">
+    <a href="#" class="shrink-0 rounded-full bg-primary px-4 py-1.5 text-white">Zöldségek</a>
+    <a href="#" class="shrink-0 hover:text-accent">Gyümölcsök</a>
+    <a href="#" class="shrink-0 hover:text-accent">Szezonális válogatás</a>
+    <a href="#" class="shrink-0 hover:text-accent">Bio zöldség-gyümölcs</a>
+    <a href="#" class="shrink-0 hover:text-accent">Receptek</a>
+  </nav>
+</div>
+
+<main class="flex-1">
+
+  <!-- HERO -->
+  <section class="relative mx-auto mb-10 max-w-[1760px] overflow-hidden rounded-2xl bg-secondary px-[3%] py-10 xl:px-10">
+    <div class="relative z-10 max-w-[640px]">
+      <h1 class="text-4xl font-extrabold text-white sm:text-5xl">Frissen szedett zöldség és gyümölcs <span class="text-mustard">akár 90 perc alatt!</span></h1>
+      <p class="mt-3 text-lg text-white/90">Ingyenes szállítás az első vásárlásnál 12 000 Ft felett.</p>
+      <div class="mt-8 flex flex-wrap gap-8">
+        <div class="flex items-start gap-2 max-w-[220px]"><span class="text-2xl">🌱</span><div><p class="font-semibold text-white">Termelőtől közvetlenül</p><p class="text-sm text-white/80">Helyi gazdáktól, naponta frissen</p></div></div>
+        <div class="flex items-start gap-2 max-w-[220px]"><span class="text-2xl">🌿</span><div><p class="font-semibold text-white">100% elégedettségi garancia</p><p class="text-sm text-white/80">Nem tetszett? Visszaadjuk a pénzt!</p></div></div>
+        <div class="flex items-start gap-2 max-w-[220px]"><span class="text-2xl">🏆</span><div><p class="font-semibold text-white">Piacvezető</p><p class="text-sm text-white/80">Top1 online zöldséges</p></div></div>
+        <div class="flex items-center gap-1 text-white">⭐ <span class="font-semibold">5.0/5</span><span class="text-white/80">(33 409+)</span></div>
+      </div>
+    </div>
+    <div class="pointer-events-none absolute bottom-0 right-0 hidden w-[300px] text-[180px] leading-none md:block">🥬</div>
+  </section>
+
+  <!-- CATEGORY GRID -->
+  <section class="mx-auto mb-10 max-w-[1760px] px-[3%] xl:px-10">
+    <h2 class="mb-3 text-2xl font-bold">Zöldség és gyümölcs kategóriák</h2>
+    <div class="grid grid-cols-3 gap-3 sm:grid-cols-6 md:grid-cols-9">
+      <!-- generated by JS below -->
+    </div>
+  </section>
+
+  <div id="carousels"></div>
+
+  <!-- STATS -->
+  <section class="mx-auto mb-10 max-w-[1760px] px-[3%] xl:px-10">
+    <div class="rounded-2xl bg-secondary p-10 text-center">
+      <h2 class="text-3xl font-extrabold text-white">Több mint <span class="text-mustard">500 000</span> elégedett vásárló</h2>
+      <p class="mt-2 text-white/80">Csatlakozz Magyarország vezető online zöldség-gyümölcs szaküzletéhez.</p>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="mx-auto mb-10 max-w-[1760px] px-[3%] xl:px-10">
+    <h2 class="mb-3 text-2xl font-bold">Mitől különleges a Kerepesi Zöldség</h2>
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+      <div class="rounded-xl bg-card p-4"><span class="text-3xl">🥦</span><p class="mt-2 font-semibold">Friss, minőségi zöldség-gyümölcs</p><p class="mt-1 text-sm text-muted">Termelőktől közvetlenül hozzád.</p></div>
+      <div class="rounded-xl bg-card p-4"><span class="text-3xl">🚚</span><p class="mt-2 font-semibold">Gyors kiszállítás</p><p class="mt-1 text-sm text-muted">Akár 90 perc alatt az ajtódnál.</p></div>
+      <div class="rounded-xl bg-card p-4"><span class="text-3xl">✅</span><p class="mt-2 font-semibold">Elégedettségi garancia</p><p class="mt-1 text-sm text-muted">Nem tetszett? Visszaadjuk a pénzt.</p></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="mt-10 border-t border-white/10 bg-card px-[3%] py-10 xl:px-10">
+  <div class="mx-auto grid max-w-[1760px] grid-cols-2 gap-6 sm:grid-cols-4">
+    <div>
+      <a href="#" class="text-xl font-extrabold text-primary">Kerepesi <span class="text-xs font-normal text-muted">Zöldség</span></a>
+      <p class="mt-2 text-sm text-muted">Online szupermarket – friss termékek akár 90 perc alatt.</p>
+    </div>
+    <div><p class="mb-2 font-semibold">Kerepesi Zöldség</p><ul class="space-y-1.5 text-sm text-muted"><li>Rólunk</li><li>Karrier</li><li>Sajtószoba</li><li>Blog</li><li>Kerepesi Séf</li></ul></div>
+    <div><p class="mb-2 font-semibold">Vásárlóknak</p><ul class="space-y-1.5 text-sm text-muted"><li>Kapcsolat</li><li>GYIK</li><li>Szállítási információk</li><li>ÁSZF</li><li>Adatvédelem</li></ul></div>
+    <div><p class="mb-2 font-semibold">Kövess minket</p><ul class="space-y-1.5 text-sm text-muted"><li>Facebook</li><li>Instagram</li><li>TikTok</li><li>YouTube</li></ul></div>
+  </div>
+  <p class="mx-auto mt-10 max-w-[1760px] text-xs text-muted">© 2026 Kerepesi Zöldség. Minden jog fenntartva.</p>
+</footer>
+
+<script>
+const categoryIcons = {
+  "Levélzöldségek": "🥬",
+  "Gyökérzöldségek": "🥕",
+  "Paradicsomfélék": "🍅",
+  "Hagymafélék": "🧅",
+  "Gombák": "🍄",
+  "Fűszernövények": "🌿",
+  "Almafélék": "🍎",
+  "Citrusfélék": "🍋",
+  "Bogyós gyümölcsök": "🍓",
+  "Csonthéjas gyümölcsök": "🍑",
+  "Egzotikus gyümölcsök": "🥭",
+  "Dinnyefélék": "🍉",
+  "Saláták": "🥗",
+  "Bio zöldség": "🌱",
+  "Bio gyümölcs": "🍏",
+  "Előkészített zöldség": "🥡",
+  "Gyümölcslevek": "🧃",
+  "Szezonális válogatás": "🧺",
+};
+const categories = Object.keys(categoryIcons);
+document.querySelector('.grid.grid-cols-3').innerHTML = categories.map(c => `
+  <a href="#" class="flex flex-col items-center gap-1.5 rounded-xl bg-card p-3 text-center text-xs font-medium hover:bg-accent hover:text-secondary">
+    <span class="flex size-12 items-center justify-center rounded-full bg-secondary text-lg">${categoryIcons[c]}</span>${c}
+  </a>`).join('');
+
+const carouselData = [
+  { title: "Legkedveltebb zöldségek", items: [
+    ["🥒","Magyar kígyóuborka","250 g","1089.2 Ft/kg","272 Ft"],
+    ["🥕","Magyar sárgarépa","1 kg","399 Ft/kg","399 Ft"],
+    ["🍅","Cherry paradicsom","250 g","1596 Ft/kg","399 Ft"],
+    ["🥔","Magyar burgonya","2 kg","299 Ft/kg","598 Ft"],
+    ["🧅","Vöröshagyma","1 kg","249 Ft/kg","249 Ft"],
+    ["🫑","Kaliforniai paprika","500 g","998 Ft/kg","499 Ft"],
+  ]},
+  { title: "Legkedveltebb gyümölcsök", items: [
+    ["🍌","Prémium minőségű banán","kb. 1 kg","333 Ft/kg","333 Ft"],
+    ["🍉","Görögdinnye","kb. 5 kg","199 Ft/kg","995 Ft"],
+    ["🥑","Avokádó","db","599 Ft/db","599 Ft"],
+    ["🍎","Magyar Jonagold Alma","1 kg","449 Ft/kg","449 Ft"],
+    ["🍇","Fürtös szőlő","500 g","1398 Ft/kg","699 Ft"],
+    ["🍑","Sárgabarack","500 g","1598 Ft/kg","799 Ft"],
+  ]},
+  { title: "Bio zöldség és gyümölcs", items: [
+    ["🥬","Bio fejes saláta","db","499 Ft/db","499 Ft"],
+    ["🥦","Bio brokkoli","500 g","1398 Ft/kg","699 Ft"],
+    ["🍓","Bio szamóca","250 g","2396 Ft/kg","599 Ft"],
+    ["🍋","Bio citrom","500 g","1398 Ft/kg","699 Ft"],
+    ["🥝","Bio kivi","4 db","250 Ft/db","999 Ft"],
+    ["🫐","Bio áfonya","125 g","3992 Ft/kg","499 Ft"],
+  ]},
+  { title: "Szezonális válogatás", items: [
+    ["🍒","Magyar meggy","500 g","1798 Ft/kg","899 Ft"],
+    ["🌽","Csemegekukorica","db","199 Ft/db","199 Ft"],
+    ["🍈","Sárgadinnye","kb. 1.5 kg","499 Ft/kg","749 Ft"],
+    ["🍐","Vilmoskörte","1 kg","549 Ft/kg","549 Ft"],
+    ["🍆","Padlizsán","500 g","998 Ft/kg","499 Ft"],
+    ["🥒","Koktéluborka","300 g","1663 Ft/kg","499 Ft"],
+  ]},
+];
+
+document.getElementById('carousels').innerHTML = carouselData.map(sec => `
+  <section class="mx-auto mb-10 max-w-[1760px] px-[3%] xl:px-10">
+    <div class="mb-3 flex items-center justify-between">
+      <h2 class="text-2xl font-bold">${sec.title}</h2>
+      <a href="#" class="text-sm font-semibold text-accent">Több</a>
+    </div>
+    <div class="flex gap-3 overflow-x-auto pb-2 noscroll">
+      ${sec.items.map(([emoji,name,unit,unitPrice,price]) => `
+        <div class="flex w-[220px] shrink-0 flex-col rounded-xl bg-card p-3">
+          <div class="mb-2 flex h-24 items-center justify-center text-5xl">${emoji}</div>
+          <p class="line-clamp-2 min-h-[40px] text-sm font-medium">${name}</p>
+          <p class="mt-1 text-xs text-muted">${unit}</p>
+          <p class="text-xs text-muted">${unitPrice}</p>
+          <div class="mt-2 flex items-center justify-between">
+            <span class="text-lg font-bold">${price}</span>
+            <button class="flex size-8 items-center justify-center rounded-full bg-primary text-white">+</button>
+          </div>
+        </div>`).join('')}
+    </div>
+  </section>`).join('');
+</script>
+
 </body>
 </html>
